@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 3</title>
+    <style>
+
+        * {
+        box-sizing: border-box;
+        }
+
+        body {
+        font-family: "The Godfather", sans-serif;                                         
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        font-size: 100px;
+        font-weight: lighter;
+        background: black url("https://skillstorm.com/wp-content/uploads/2020/05/skillstorm-logo-1.png");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: white;
+        }
+
+        .title {
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        padding-top: 165px;
+        }
+
+        .puppet, .title {
+        margin-top: 0;
+        margin-bottom: 0;
+        }
+
+        .container-instance {
+        margin: 0;
+        margin-right: 50px;
+        width: 25vw;
+        }
+
+        .container-form {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        width: 33vw;
+        font-size: 50px;
+        margin-right: 100px;
+        }
+
+        .voice {
+        display: flex;
+        flex-direction: column;
+        }
+
+        select, #submit {
+        width: 200px;
+        }
+
+        textarea {
+        width: 100%;
+        height: 200px;
+        font: inherit;
+        font-size: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        audio {
+        display:none;
+        margin: 5px;
+        }
+
+        form {
+        display: flex;
+        flex-direction: column;
+        }
+
+        ._text {
+        font-size: 40px;
+        margin: 0;
+        }
+
+        .container-container {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-end;
+        }
+
+        .space {
+        width: 33vw;
+        }
+    </style>
+</head>
+<body>
+    <p class="title">VET-TEC Project 3</p>
+    <div class="container-container">
+        <div class="space"></div>
+        <div class="container-form">
+            <div class="voice">
+                <label for="voice">Select a voice:</label>
+                <select id="voice" name="voice">
+                    <option value="">Choose a voice...</option>
+                    <option value="Joanna">Joanna</option>
+                    <option value="Kimberly">Kimberly</option>
+                    <option value="Matthew">Matthew</option>
+                    <option value="Justin">Justin</option>
+                    <option value="Zeina">Zeina (Arabic)</option>
+                    <option value="Zhiyu">Zhiyu (Cantonese)</option>
+                    <option value="Naja">Naja (Danish)</option>
+                    <option value="Hans">Hans (German)</option>
+                    <option value="Takumi">Takumi (Japanese)</option>
+                    <option value="Carmen">Carmen (Russian)</option>
+                    <option value="Mia">Mia (Spanish)</option>
+                    <option value="Astrid">Astrid (Swedish)</option>
+                    <option value="Filiz">Filiz (Turkish)</option>
+                    <option value="Gwyneth">Gwyneth (Welsh)</option>
+                </select>
+            </div>
+            <div class="textarea">
+                <label for="text">Text to read:</label>
+                <textarea id="text" maxlength="1000" minlength="1" name="text"
+                placeholder="Type some text here...">Type something for me to speak about...</textarea>
+            </div>
+            <button id="submit">Read</button>
+        </div>
+        <div class="container-instance">
+            <audio id="player"></audio>
+        </div>
+    </div>
+    <script>
+        (function () {
+            window.onload = function(){
+                const elemPlayButton = document.querySelector("#submit");
+                const elemVoice = document.querySelector("#voice");
+                const elemText = document.querySelector("#text");
+                if (elemPlayButton){
+                    elemPlayButton.addEventListener("click", function() {
+                        let url = "https://8f3frxmm35.execute-api.us-west-2.amazonaws.com/default/pollyDemo";
+                        url += "?voice=" + encodeURIComponent(elemVoice.value);
+                        url += "&text=" + encodeURIComponent(elemText.value);
+                        const elemAudio = document.createElement("AUDIO");
+                        document.body.appendChild(elemAudio);
+                        elemAudio.controls = true;
+                        elemAudio.src = url;
+                        elemAudio.play();
+                        console.log(url);
+                    });
+                }
+            }
+        }());
+    </script>
+</body>
+</html>
